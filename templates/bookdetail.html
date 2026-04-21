@@ -32,4 +32,19 @@
 
         {% endfor %}
     </ul>
+
+    {% if user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="comment" class="form-label">Comment</label>
+                <textarea name="comment" id="comment" class="form-control"></textarea>
+            </div>
+            <button class="btn btn-primary">Add Review</button>
+        </form>
+    {% else %}
+        <p>Please <a href="{% url 'login' %}">login</a> to add a review.</p>
+    {% endif %}
+  
+
 {% endblock %}

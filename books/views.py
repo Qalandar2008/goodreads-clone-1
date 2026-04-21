@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import View
 
-from books.models import Book
+from books.models import Book,Review
 
 
 # Create your views here.
@@ -18,3 +18,11 @@ class BookDetailView(View):
     def get(self, request, id):
         book = Book.objects.get(pk=id)
         return render(request, 'bookdetail.html', {'kitob': book})
+    
+    def post(self, request, id):
+        book = Book.objects.get(pk=id)
+        comment = request.POST['comment']
+      
+        Review.objects.create(book=book, user=request.user, comment=comment)
+        return redirect('bookdetail', id=id)
+
